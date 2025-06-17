@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    settings.log_settings()
     start_background_speedtest()
-    logger.debug(settings.model_dump())
     yield
 
 app = FastAPI(lifespan=lifespan)
