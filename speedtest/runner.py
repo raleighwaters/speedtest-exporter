@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 def run_speedtest():
     while True:
         try:
+            logger.debug("Starting new speedtest run...")
             result = subprocess.run(
                 ["speedtest", "--format=json"],
                 capture_output=True, text=True, check=True
@@ -21,9 +22,17 @@ def run_speedtest():
             data = json.loads(result.stdout)
             update_metrics(data)
 
-        except Exception as err:
-            logger.error(f"[Speedtest error] {err}")
+        except subprocess.CalledProcessError as err:
+            logger.error(f"[Speedtest failed] Command: {err.cmd}")
+            logger.error(f"[Speedtest failed] Return code: {err.returncode}")
+            process_output = (err.stdout or '') + (err.stderr or '')
+            logger.error("[Speedtest failed] Command output:\n%s", process_output.strip())
             speedtest_failures_total.inc()
+
+        except Exception as err:
+            logger.exception(f"[Unexpected error running speedtest] {err}")
+            speedtest_failures_total.inc()
+
         sleep(settings.SPEEDTEST_INTERVAL)
 
 
