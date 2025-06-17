@@ -1,12 +1,15 @@
 import json
 import subprocess
 import threading
+import logging
 from time import sleep
 
 from speedtest.metrics import update_metrics
 from speedtest.metrics import speedtest_runs_total, speedtest_failures_total
 from speedtest.settings import SPEEDTEST_INTERVAL
 from speedtest.settings import TEST_MODE
+
+logger = logging.getLogger(__name__)
 
 def run_speedtest():
     while True:

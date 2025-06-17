@@ -1,5 +1,9 @@
+import logging
+
 from prometheus_client import Gauge, Counter
 from typing import Dict
+
+logger = logging.getLogger(__name__)
 
 # Speedtest Exec Information
 speedtest_runs_total = Counter("speedtest_runs_total", "Total number of speedtest executions")

@@ -1,3 +1,4 @@
 fastapi
 uvicorn
 prometheus-client
+pyyaml==6.0.2
