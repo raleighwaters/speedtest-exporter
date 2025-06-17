@@ -6,8 +6,7 @@ from time import sleep
 
 from speedtest.metrics import update_metrics
 from speedtest.metrics import speedtest_runs_total, speedtest_failures_total
-from speedtest.settings import SPEEDTEST_INTERVAL
-from speedtest.settings import TEST_MODE
+from speedtest.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +24,7 @@ def run_speedtest():
         except Exception as err:
             logger.error(f"[Speedtest error] {err}")
             speedtest_failures_total.inc()
-        sleep(SPEEDTEST_INTERVAL)
+        sleep(settings.SPEEDTEST_INTERVAL)
 
 
 def test_run_speedtest():
@@ -44,11 +43,11 @@ def test_run_speedtest():
             logger.error(err)
             speedtest_failures_total.inc()
 
-        sleep(SPEEDTEST_INTERVAL)
+        sleep(settings.SPEEDTEST_INTERVAL)
 
 
 def start_background_speedtest():
-    if TEST_MODE:
+    if settings.TEST_MODE:
         thread_target = test_run_speedtest
     else:
         thread_target = run_speedtest

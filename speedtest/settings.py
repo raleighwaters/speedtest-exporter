@@ -1,4 +1,13 @@
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
-TEST_MODE=False
+class Settings(BaseSettings):
+    SPEEDTEST_INTERVAL: int = Field(default=600, description="Interval in seconds between speedtest runs")
+    TEST_MODE: bool = Field(default=False, description="Use test mode with mock data")
 
-SPEEDTEST_INTERVAL=600
+    class Config:
+        env_file = ".env"
+        case_sensitive = False
+
+# Global settings instance
+settings = Settings()
