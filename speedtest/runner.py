@@ -23,14 +23,14 @@ def run_speedtest():
             update_metrics(data)
 
         except Exception as err:
-            print(f"[Speedtest error] {err}")
+            logger.error(f"[Speedtest error] {err}")
             speedtest_failures_total.inc()
         sleep(SPEEDTEST_INTERVAL)
 
 
 def test_run_speedtest():
     while True:
-        print("Running speedtest")
+        logger.debug("Running speedtest")
         try:
             with open("example.json", "r") as input_file:
                 result = input_file.read()
@@ -40,8 +40,8 @@ def test_run_speedtest():
             update_metrics(data)
 
         except Exception as err:
-            print(f"[Speedtest error] {err}")
-            print(err)
+            logger.error(f"[Speedtest error] {err}")
+            logger.error(err)
             speedtest_failures_total.inc()
 
         sleep(SPEEDTEST_INTERVAL)

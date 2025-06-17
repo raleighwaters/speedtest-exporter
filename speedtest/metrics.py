@@ -41,7 +41,7 @@ def update_metrics(results: Dict):
     """Updates the Prometheus metrics with the latest speedtest results."""
 
     if not isinstance(results, dict):
-        print("[update_metrics] Invalid results type:", type(results))
+        logger.error("[update_metrics] Invalid results type:", type(results))
         return
 
     if results:
@@ -67,3 +67,5 @@ def update_metrics(results: Dict):
         speedtest_upload_latency_jitter_ms.set(results.get("upload", {}).get("latency", {}).get("jitter", 0))
 
         speedtest_packet_loss_percent.set(results.get("packetLoss", 0))
+
+        logger.debug('Updated speedtest metrics')
