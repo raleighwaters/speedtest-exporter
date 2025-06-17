@@ -1,5 +1,5 @@
-fastapi
-uvicorn
-prometheus-client
+fastapi==0.115.12
+uvicorn==0.34.3
+prometheus-client==0.22.1
 pyyaml==6.0.2
 pydantic-settings==2.9.1
